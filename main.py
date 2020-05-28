@@ -1,10 +1,30 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
+import json
 import pymysql
 from datetime import datetime
+from flask_mail import Mail
+
+local_server = True
+
+with open('config.json','r') as c:
+    params = json.load(c)["params"]
+
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://root:@localhost/blog'
+app.secret_key = 'super-secret-key'
+app.config.update(
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = '465',
+    MAIL_USE_SSL = True,
+    MAIL_USERNAME = params['gmail-user'],
+    MAIL_PASSWORD = params['gmail-password']
+)
+mail = Mail(app)
+if(local_server):
+    app.config["SQLALCHEMY_DATABASE_URI"] = params['local_uri']
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = params['prod_uri']
 db = SQLAlchemy(app)
 
 class Contacts(db.Model):
@@ -16,11 +36,24 @@ class Contacts(db.Model):
     email = db.Column(db.String(20), nullable=False)
     phone_no = db.Column(db.String(12), nullable=False)
     msg = db.Column(db.String(200), nullable=False)
-    date = db.Column(db.String(120), nullable=True)
+    date = db.Column(db.String(50), nullable=True)
+
+class Posts(db.Model):
+    #=================posts table colums name============
+    #========== no, title, slug, content, date ============
+    
+    no = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(20), nullable=False)
+    tag_line = db.Column(db.String(30), nullable=False)
+    slug = db.Column(db.String(30), nullable=False)
+    content = db.Column(db.String(500), nullable=False)
+    date = db.Column(db.String(50), nullable=True)
+    img_file = db.Column(db.String(50), nullable=True)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    post = Posts.query.filter_by().all()[0:params['no_of_posts']]
+    return render_template('index.html', posts=post)
 
 @app.route('/contact', methods = ['GET','POST'])
 def contact():
@@ -37,20 +70,64 @@ def contact():
         entry = Contacts(name=name, email=email, phone_no=phone, msg=message, date=datetime.now())
         db.session.add(entry)
         db.session.commit()
-
-
-
+        # Send a email below funtion use=============
+        '''
+        mail.send_message(
+            'New Message from ' + name,
+            sender=email,
+            recipients= [params['gmail-user']],
+            body= message + "\n" + phone
+        )'''
+        # Email send block end ====================
     return render_template('contact.html')
 
 @app.route('/about')
 def about():
-    
     return render_template('about.html')
 
+@app.route('/post/<string:post_slug>',methods=['GET'])
+def post_route(post_slug):
+    post = Posts.query.filter_by(slug=post_slug).first()
+    return render_template('post.html', post=post)
+
 @app.route('/post')
-def post():
-    
+def post_page():
     return render_template('post.html')
+
+@app.route('/edit/<string:sno>', methods=['GET','POST'])
+def edit(sno):
+    if ('user' in session and session['user'] == params['admin-user']):
+        if request.method == 'POST':
+            box_title = request.form.get('title')
+            tline = request.form.get('tline') 
+            slug = request.form.get('slug')
+            content = request.form.get('content')
+            img_file = request.form.get('img_file')
+
+            if sno == '0':
+                post = Posts(title=box_title,tag_line=tline,slug=slug,content=content,date=datetime.now(),img_file=img_file)
+                db.session.add(post)
+                db.session.commit()
+        return render_template('edit.html',sno=sno)
+
+    else:
+        return render_template('login.html')
+
+
+@app.route('/dashboard', methods=['GET','POST'])
+def login():
+    if ('user' in session and session['user'] == params['admin-user']):
+        posts = Posts.query.all()
+        return render_template('dashboard.html', post=posts)
+    if request.method == 'POST':
+        username = request.form.get('uname')
+        userpass = request.form.get('pass')
+        if (username == params['admin-user'] and userpass == params['admin-pass']):
+            session['user'] = username
+            posts = Posts.query.all()
+            return render_template('dashboard.html', posts = posts)
+    
+    return render_template('login.html')
 
 
 app.run(debug=True)

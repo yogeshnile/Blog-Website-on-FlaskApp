@@ -1,0 +1,15 @@
+{
+    "params":
+    {
+        "local_server":"True",
+        "local_uri":"mysql+pymysql://root:@localhost/blog",
+        "prod_uri":"mysql+pymysql://root:@localhost/blog",
+        "gmail-user": "enter gmail id",
+        "gmail-password": "enter gmail password",
+        "no_of_posts":3,
+        "admin-user":"yogesh",
+        "admin-pass":"hello"
+
+    }
+
+}
