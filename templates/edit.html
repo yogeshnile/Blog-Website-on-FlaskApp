@@ -2,14 +2,14 @@
 {% block body %}
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('{{ url_for('static', filename='img/admin.jpg') }}')">
+  <header class="masthead" style="background-image: url('{{ url_for('static', filename='img/edit.png') }}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Admin Penel</h1>
-            <span class="subheading">Managed your blog here</span>
+            <h1>Edit Your Blog</h1>
+            <span class="subheading">Edit and Delect your blog here</span>
           </div>
         </div>
       </div>
@@ -21,43 +21,48 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
        
-        
+        <h5>Action</h5>
+        <br>
+        <a href="/dashboard"><button class="btn btn-primary">Back to dashboard</button></a>
+        <a href="/logout"><button class="btn btn-primary">Logout</button></a>
+        <br>
+        <hr>
 
  <h3>Edit / Add New Post</h3>
 
-    <form name="sentMessage" id="contactForm" action="/edit/{{sno}}" method="post" novalidate>
+    <form name="sentMessage" id="contactForm" action="/edit/{{post.no}}" method="post" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Title</label>
-              <input type="text" class="form-control" placeholder="Title" id="title" name='title' required data-validation-required-message="Please enter blog Title.">
+              <input type="text" class="form-control" placeholder="Title" id="title" name='title' required data-validation-required-message="Please enter blog Title." value="{{ post.title }}">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Tag Line</label>
-              <input type="textl" class="form-control" placeholder="Tagline" id="tline" name="tline" required data-validation-required-message="Please enter blog Tagline.">
+              <input type="textl" class="form-control" placeholder="Tagline" id="tline" name="tline" required data-validation-required-message="Please enter blog Tagline." value="{{ post.tag_line }}">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Slug</label>
-              <input type="text" class="form-control" placeholder="Slug" id="slug" name="slug" required data-validation-required-message="Please enter blog slug.">
+              <input type="text" class="form-control" placeholder="Slug" id="slug" name="slug" required data-validation-required-message="Please enter blog slug." value="{{ post.slug }}">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Content</label>
-              <textarea rows="5" class="form-control" placeholder="Content" id="content" name="content" required data-validation-required-message="Please enter a blog content."></textarea>
+              <textarea rows="5" class="form-control" placeholder="Content" id="content" name="content" required data-validation-required-message="Please enter a blog content.">{{ post.content }}</textarea>
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Images File</label>
-              <input type="text" class="form-control" placeholder="Images File" id="img_file" name="img_file" required data-validation-required-message="Please enter images file name."></input>
+              <input type="text" class="form-control" placeholder="Images File" id="img_file" name="img_file" required data-validation-required-message="Please enter images file name." value="{{ post.img_file }}"></input>
               <p class="help-block text-danger"></p>
             </div>
           </div>

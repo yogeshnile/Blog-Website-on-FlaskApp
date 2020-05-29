@@ -20,9 +20,22 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-      	<h6>Upload file</h6>
+      	<h5>Action</h5>
+      	<br>
+      	<a href="/edit/0"><button class="btn btn-success">Add a new post</button></a>
+      	<a href="/logout"><button class="btn btn-danger float-right btn-outline-warning">Logout</button></a>
+      	<br>
+      	<hr>
+      		<h5>Upload a file</h5>
       	
+      		<form action="/uploader" method="post" enctype="multipart/form-data">
+      			<input type="file" name="file1">
 
+      			<button type="submit" class="btn btn-primary">submit</button>
+      			
+      		</form>
+      		{{ error }}
+      	<hr>
  <h3>Post Manage</h3>
 <table class="table">
   <thead>
@@ -42,8 +55,8 @@
       <th scope="row">{{ post.no }}</th>
       <td>{{ post.title }}</td>
       <td>{{ post.date }}</td>
-      <td><a href="#"><button class="btn btn-primary">Edit</button></a></td>
-      <td><button class="btn btn-primary">Delete</button></td>
+      <td><a href="/edit/{{ post.no }}"><button class="btn btn-light btn-outline-success">Edit</button></a></td>
+      <td><a href="/delete/{{ post.no }}"><button class="btn btn-light btn-outline-success">Delete</button></a></td>
     </tr>
     
 
