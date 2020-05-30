@@ -9,7 +9,7 @@
         "no_of_posts":3,
         "admin-user":"yogesh",
         "admin-pass":"hello",
-        "upload_location":"/home/yogesh/Documents/Flask/static/img"
+        "upload_location":"Add your file location + /Flask/static/img"
 
     }
 
