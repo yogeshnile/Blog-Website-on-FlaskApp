@@ -21,6 +21,14 @@ from flask_mail import Mail
 ```
 
 
+Website admin and password store in the [config.json](https://github.com/yogeshnile/Blog-Website-on-FlaskApp/blob/master/config.json) file
+
+```json
+"admin-user":"yogesh",
+"admin-pass":"hello"
+```
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
