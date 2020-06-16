@@ -3,7 +3,7 @@ In this repo created a simple blog website using Flask App.
 
 In this website you can add, edit and delect blog. All blog are store in the [mysql](https://github.com/yogeshnile/Blog-Website-on-FlaskApp/blob/master/blog.sql) database.
 
-## Database
+## Database :dvd:
 First to all in your pc are should be already installed [XAMPP](https://www.apachefriends.org/download.html) server.
 
 Create a first database on your myphpadmin. Make sure database name should be **blog** than upload a [blog.sql](https://github.com/yogeshnile/Blog-Website-on-FlaskApp/blob/master/blog.sql) file in your database.
