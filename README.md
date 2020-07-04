@@ -10,17 +10,9 @@ First to all in your pc are should be already installed [XAMPP](https://www.apac
 
 Create a first database on your myphpadmin. Make sure database name should be **blog** than upload a [blog.sql](https://github.com/yogeshnile/Blog-Website-on-FlaskApp/blob/master/blog.sql) file in your database.
 
-### Requirements :warning:
-```python
-from flask import Flask, render_template, request, session, redirect
-from flask_sqlalchemy import SQLAlchemy
-import json
-import pymysql
-import os
-from datetime import datetime
-from flask_mail import Mail
+# Technology used in Project :hotsprings:
 
-```
+<img target="_blank" src="https://github.com/yogeshnile/technology/blob/master/Flask.png" width="300">     <img target="_blank" src="https://github.com/yogeshnile/technology/blob/master/flask-sqlalchemy.png" width="400">     <img target="_blank" src="https://github.com/yogeshnile/technology/blob/master/pymysql.png" width="400">
 
 
 Website admin and password store in the [config.json](https://github.com/yogeshnile/Blog-Website-on-FlaskApp/blob/master/config.json) file
